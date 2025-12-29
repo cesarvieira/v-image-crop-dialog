@@ -1,0 +1,53 @@
+name: 📦 Publicar pacote no GitHub Packages
+
+on:
+  push:
+    branches:
+      - main # ou qualquer branch que desejar
+
+jobs:
+  publish:
+    name: 📦 Build & Publish
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip actions]')"
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: 🧽 Checkout do código
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.5.0
+          registry-url: https://npm.pkg.github.com/
+          scope: '@cesarvieira'
+
+      - name: 📦 Instalar dependências
+        run: npm ci
+
+      - name: 🚀 Publicar no GitHub Packages
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  version:
+    needs: [ publish ]
+    name: Bump version 📝
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[skip actions]')"
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v2
+
+      - name: Update version 📝
+        run: |
+          git config --global user.name 'Cesar Vieira'
+          git config --global user.email 'cesarvieira.dev@gmail.com'
+          npm version patch -m "Bump version to %s 🚀 [skip actions]"
+          git push
