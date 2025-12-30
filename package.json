@@ -24,7 +24,6 @@
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint .",
     "build": "vite build",
-    "playground": "vite --config playground/vite.config.ts",
     "preversion": "npm run lint && npm run type-check"
   },
   "keywords": [

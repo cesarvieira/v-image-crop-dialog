@@ -1,16 +1,21 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import VImageCropDialog from '../src/components/VImageCropDialog.vue';
+import { VImageCropDialog } from '../src/index.ts';
+import { useLocale } from 'vuetify';
 
 const open = ref(false);
 const image = ref('https://picsum.photos/seed/test01/600/600');
 const result = ref<File | null>(null);
 const url = computed(() => result.value ? URL.createObjectURL(result.value) : null);
+
+const { t } = useLocale();
 </script>
 
 <template>
   <div>
-    <VBtn @click="open = true">Selecionar imagem</VBtn>
+    <VBtn @click="open = true">
+      {{ t('$vuetify.open') }}
+    </VBtn>
 
     <VImageCropDialog
       v-model="open"
@@ -19,26 +24,28 @@ const url = computed(() => result.value ? URL.createObjectURL(result.value) : nu
     />
 
     <div v-if="result">
-      <h3>Resultado</h3>
+      <h3>Result</h3>
       <table>
-        <tr>
-          <td>Nome</td>
-          <td>{{ result.name }}</td>
-        </tr>
-        <tr>
-          <td>Tipo</td>
-          <td>{{ result.type }}</td>
-        </tr>
-        <tr>
-          <td>Tamanho</td>
-          <td>{{ result.size }}</td>
-        </tr>
-        <tr>
-          <td>Preview</td>
-          <td>
-            <img v-if="url" :src="url">
-          </td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>Name</td>
+            <td>{{ result.name }}</td>
+          </tr>
+          <tr>
+            <td>Type</td>
+            <td>{{ result.type }}</td>
+          </tr>
+          <tr>
+            <td>Size</td>
+            <td>{{ result.size }}</td>
+          </tr>
+          <tr>
+            <td>Preview</td>
+            <td>
+              <img v-if="url" :src="url">
+            </td>
+          </tr>
+        </tbody>
       </table>
     </div>
   </div>

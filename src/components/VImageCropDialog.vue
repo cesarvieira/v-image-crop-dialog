@@ -4,6 +4,7 @@ import { Cropper, CircleStencil } from 'vue-advanced-cropper';
 import type { CropperResult, ImageSize } from 'vue-advanced-cropper';
 import 'vue-advanced-cropper/dist/style.css';
 import { VDialog, VCard, VCardText, VCardActions, VBtn, VIcon } from 'vuetify/components';
+import { useLocale } from 'vuetify';
 
 interface Props {
   modelValue: boolean;
@@ -15,20 +16,31 @@ interface Props {
   file?: File | null;
   url?: string | null;
   aspectRatio?: number;
-  // Ícones personalizados
-  iconFlipVertical?: string;
-  iconFlipHorizontal?: string;
-  iconRotateRight?: string;
-  iconRotateLeft?: string;
-  iconZoomIn?: string;
-  iconZoomOut?: string;
-  iconReset?: string;
-  iconCrop?: string;
-  // Texto do botão
-  cropButtonText?: string;
+  icons?: {
+    flipVertical?: string;
+    flipHorizontal?: string;
+    rotateRight?: string;
+    rotateLeft?: string;
+    zoomIn?: string;
+    zoomOut?: string;
+    reset?: string;
+    crop?: string;
+    cancel?: string;
+  };
+  labels?: {
+    crop?: string;
+    cancel?: string;
+  };
 }
 
 const props = defineProps<Props>();
+const { t } = useLocale();
+
+const labels = computed(() => ({
+  crop: props.labels?.crop || t('$vuetify.confirmEdit.ok'),
+  cancel: props.labels?.cancel || t('$vuetify.confirmEdit.cancel'),
+}));
+
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void;
   (e: 'update:file', value: File): void;
@@ -95,13 +107,13 @@ const crop = async () => {
 };
 
 const actions = computed(() => [
-  { icon: props.iconFlipVertical || 'mdi-flip-vertical', fn: () => cropperEl.value?.['flip'](true, false) },
-  { icon: props.iconFlipHorizontal || 'mdi-flip-horizontal', fn: () => cropperEl.value?.['flip'](false, true) },
-  { icon: props.iconRotateRight || 'mdi-rotate-right', fn: () => cropperEl.value?.['rotate'](90) },
-  { icon: props.iconRotateLeft || 'mdi-rotate-left', fn: () => cropperEl.value?.['rotate'](-90) },
-  { icon: props.iconZoomIn || 'mdi-magnify-plus-outline', fn: () => cropperEl.value?.['zoom'](2) },
-  { icon: props.iconZoomOut || 'mdi-magnify-minus-outline', fn: () => cropperEl.value?.['zoom'](0.5) },
-  { icon: props.iconReset || 'mdi-refresh', fn: () => cropperEl.value?.['reset']() },
+  { icon: props.icons?.flipVertical || 'mdi-flip-vertical', fn: () => cropperEl.value?.['flip'](true, false) },
+  { icon: props.icons?.flipHorizontal || 'mdi-flip-horizontal', fn: () => cropperEl.value?.['flip'](false, true) },
+  { icon: props.icons?.rotateRight || 'mdi-rotate-right', fn: () => cropperEl.value?.['rotate'](90) },
+  { icon: props.icons?.rotateLeft || 'mdi-rotate-left', fn: () => cropperEl.value?.['rotate'](-90) },
+  { icon: props.icons?.zoomIn || 'mdi-magnify-plus-outline', fn: () => cropperEl.value?.['zoom'](2) },
+  { icon: props.icons?.zoomOut || 'mdi-magnify-minus-outline', fn: () => cropperEl.value?.['zoom'](0.5) },
+  { icon: props.icons?.reset || 'mdi-refresh', fn: () => cropperEl.value?.['reset']() },
 ]);
 
 const defaultSize = ({ imageSize }: { imageSize: ImageSize }) => {
@@ -162,8 +174,18 @@ onBeforeUnmount(() => {
           </div>
         </div>
       </VCardText>
-      <VCardActions class="pt-0">
-        <slot name="crop-button" :processing="processing" :crop="crop">
+      <VCardActions class="pt-0 d-flex justify-space-between">
+        <slot name="actions" :processing="processing" :crop="crop">
+          <VBtn
+            color="secondary"
+            variant="tonal"
+            class="ms-3 px-4"
+            :loading="processing"
+            @click="crop"
+          >
+            {{ labels.cancel }} <VIcon :icon="props.icons?.cancel || 'mdi-close'" end />
+          </VBtn>
+
           <VBtn
             color="primary"
             variant="tonal"
@@ -171,7 +193,7 @@ onBeforeUnmount(() => {
             :loading="processing"
             @click="crop"
           >
-            {{ props.cropButtonText || 'Crop' }} <VIcon :icon="props.iconCrop || 'mdi-check'" end />
+            {{ labels.crop }} <VIcon :icon="props.icons?.crop || 'mdi-crop'" end />
           </VBtn>
         </slot>
       </VCardActions>
