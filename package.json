@@ -1,6 +1,6 @@
 {
   "name": "@cesarv/v-image-crop-dialog",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Componente Vue 3 dialog para recorte de imagens com Vuetify 3 e TypeScript",
   "main": "dist/v-image-crop-dialog.umd.js",
   "module": "dist/v-image-crop-dialog.mjs",
