@@ -9,8 +9,14 @@ import {
 import vueEslintParser from 'vue-eslint-parser';
 import stylistic from '@stylistic/eslint-plugin';
 import { defineConfig } from 'eslint/config';
+import { includeIgnoreFile } from '@eslint/compat';
+import { fileURLToPath } from 'node:url';
+import globals from 'globals';
+
+const gitignorePath = fileURLToPath(new URL('.gitignore', import.meta.url));
 
 export default defineConfig(
+  includeIgnoreFile(gitignorePath, 'Imported .gitignore patterns'),
   eslintConfigPrettier,
   js.configs.recommended,
   ...tsEslint.configs.strict,
@@ -208,6 +214,14 @@ export default defineConfig(
     ],
     rules: {
       'vue/multi-word-component-names': 'off',
+    },
+  },
+  {
+    files: ['eslint.config.mjs'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
     },
   },
 );
