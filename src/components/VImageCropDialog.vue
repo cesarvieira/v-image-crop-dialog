@@ -15,6 +15,17 @@ interface Props {
   file?: File | null;
   url?: string | null;
   aspectRatio?: number;
+  // Ícones personalizados
+  iconFlipVertical?: string;
+  iconFlipHorizontal?: string;
+  iconRotateRight?: string;
+  iconRotateLeft?: string;
+  iconZoomIn?: string;
+  iconZoomOut?: string;
+  iconReset?: string;
+  iconCrop?: string;
+  // Texto do botão
+  cropButtonText?: string;
 }
 
 const props = defineProps<Props>();
@@ -83,15 +94,15 @@ const crop = async () => {
   show.value = false;
 };
 
-const actions = [
-  { icon: 'mdi-flip-vertical', fn: () => cropperEl.value?.['flip'](true, false) },
-  { icon: 'mdi-flip-horizontal', fn: () => cropperEl.value?.['flip'](false, true) },
-  { icon: 'mdi-rotate-right', fn: () => cropperEl.value?.['rotate'](90) },
-  { icon: 'mdi-rotate-left', fn: () => cropperEl.value?.['rotate'](-90) },
-  { icon: 'mdi-magnify-plus-outline', fn: () => cropperEl.value?.['zoom'](2) },
-  { icon: 'mdi-magnify-minus-outline', fn: () => cropperEl.value?.['zoom'](0.5) },
-  { icon: 'mdi-refresh', fn: () => cropperEl.value?.['reset']() },
-];
+const actions = computed(() => [
+  { icon: props.iconFlipVertical || 'mdi-flip-vertical', fn: () => cropperEl.value?.['flip'](true, false) },
+  { icon: props.iconFlipHorizontal || 'mdi-flip-horizontal', fn: () => cropperEl.value?.['flip'](false, true) },
+  { icon: props.iconRotateRight || 'mdi-rotate-right', fn: () => cropperEl.value?.['rotate'](90) },
+  { icon: props.iconRotateLeft || 'mdi-rotate-left', fn: () => cropperEl.value?.['rotate'](-90) },
+  { icon: props.iconZoomIn || 'mdi-magnify-plus-outline', fn: () => cropperEl.value?.['zoom'](2) },
+  { icon: props.iconZoomOut || 'mdi-magnify-minus-outline', fn: () => cropperEl.value?.['zoom'](0.5) },
+  { icon: props.iconReset || 'mdi-refresh', fn: () => cropperEl.value?.['reset']() },
+]);
 
 const defaultSize = ({ imageSize }: { imageSize: ImageSize }) => {
   return {
@@ -152,15 +163,17 @@ onBeforeUnmount(() => {
         </div>
       </VCardText>
       <VCardActions class="pt-0">
-        <VBtn
-          color="primary"
-          variant="tonal"
-          class="me-3 px-4"
-          :loading="processing"
-          @click="crop"
-        >
-          Recortar <VIcon icon="mdi-check" end />
-        </VBtn>
+        <slot name="crop-button" :processing="processing" :crop="crop">
+          <VBtn
+            color="primary"
+            variant="tonal"
+            class="me-3 px-4"
+            :loading="processing"
+            @click="crop"
+          >
+            {{ props.cropButtonText || 'Crop' }} <VIcon :icon="props.iconCrop || 'mdi-check'" end />
+          </VBtn>
+        </slot>
       </VCardActions>
     </VCard>
   </VDialog>

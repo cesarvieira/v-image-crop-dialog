@@ -1,59 +1,60 @@
 # V-Image-Crop-Dialog
 
-Um componente Vue 3 dialog para recorte de imagens, construído com Vuetify 3 e TypeScript. Baseado em `vue-advanced-cropper` para uma experiência de recorte poderosa e intuitiva.
+A Vue 3 dialog component for image cropping, built with Vuetify 3 and TypeScript. Based on `vue-advanced-cropper` for a powerful and intuitive cropping experience.
 
-## ✨ Características
+## Features
 
-- 🎨 Integração completa com **Vuetify 3**
-- 🔄 Suporte para recorte **retangular** e **circular**
-- 🖼️ Suporte para imagens via **File** ou **URL**
-- 🔧 Controles avançados: rotação, espelhamento, zoom e reset
-- 📐 Aspect ratio personalizável
-- 🎯 Dimensões de saída configuráveis
-- 💾 Exportação automática em formato WebP
-- 📱 Totalmente responsivo
+- 🎨 Full integration with **Vuetify 3**
+- 🔄 Support for **rectangular** and **circular** cropping
+- 🖼️ Support for images via **File** or **URL**
+- 🔧 Advanced controls: rotation, flip, zoom, and reset
+- 📐 Customizable aspect ratio
+- 🎯 Configurable output dimensions
+- 💾 Automatic export in WebP format
+- 📱 Fully responsive
 - 🎭 TypeScript support
+- 🎨 Customizable icons and button text
 
-## 📋 Requisitos
+## Requirements
 
 - Vue 3.5+
 - Vuetify 3.11+
 
-## 📦 Instalação
+## Installation
 
 ```bash
-npm install @cesarvieira/v-image-crop-dialog
+npm install @cesarv/v-image-crop-dialog
 ```
 
-## 🚀 Uso Básico
+## Usage
 
-### 1. Registrar o componente (opcional)
+### Setup
 
-Se você estiver usando o plugin como um módulo:
+If you're using the component as a plugin:
 
 ```typescript
 import { createApp } from 'vue';
-import VImageCropDialog from '@cesarvieira/v-image-crop-dialog';
+import VImageCropDialog from '@cesarv/v-image-crop-dialog';
 
 const app = createApp(App);
 app.use(VImageCropDialog);
 ```
 
-Ou registre o componente diretamente:
+Or import the component directly:
 
-```vue
+```html
 <script setup lang="ts">
-import { VImageCropDialog } from '@cesarvieira/v-image-crop-dialog';
-import '@cesarvieira/v-image-crop-dialog/dist/v-image-crop-dialog.css';
+import { VImageCropDialog } from '@cesarv/v-image-crop-dialog';
+import '@cesarv/v-image-crop-dialog/dist/v-image-crop-dialog.css';
 </script>
 ```
 
-### 2. Uso no template
+### Basic Example
 
-```vue
+```html
 <template>
   <div>
-    <VBtn @click="open = true">Abrir Recortador</VBtn>
+    <VBtn @click="open = true">Open Cropper</VBtn>
     
     <VImageCropDialog
       v-model="open"
@@ -65,23 +66,23 @@ import '@cesarvieira/v-image-crop-dialog/dist/v-image-crop-dialog.css';
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { VImageCropDialog } from '@cesarvieira/v-image-crop-dialog';
+import { VImageCropDialog } from '@cesarv/v-image-crop-dialog';
 
 const open = ref(false);
 const imageUrl = ref('https://example.com/image.jpg');
 
 const handleCroppedImage = (file: File) => {
-  console.log('Imagem recortada:', file);
-  // Faça upload ou processe o arquivo aqui
+  console.log('Cropped image:', file);
+  // Upload or process the file here
 };
 </script>
 ```
 
-## 📖 Exemplos Avançados
+## Examples
 
-### Recorte com arquivo (File)
+### Cropping with File
 
-```vue
+```html
 <template>
   <div>
     <input type="file" @change="handleFileSelect" accept="image/*" />
@@ -109,14 +110,14 @@ const handleFileSelect = (event: Event) => {
 };
 
 const handleCroppedImage = (file: File) => {
-  console.log('Imagem recortada:', file);
+  console.log('Cropped image:', file);
 };
 </script>
 ```
 
-### Recorte circular com proporção fixa
+### Circular Crop with Fixed Aspect Ratio
 
-```vue
+```html
 <template>
   <VImageCropDialog
     v-model="open"
@@ -128,9 +129,9 @@ const handleCroppedImage = (file: File) => {
 </template>
 ```
 
-### Recorte com dimensões personalizadas
+### Custom Dimensions
 
-```vue
+```html
 <template>
   <VImageCropDialog
     v-model="open"
@@ -143,9 +144,9 @@ const handleCroppedImage = (file: File) => {
 </template>
 ```
 
-### Dialog persistente com largura máxima
+### Persistent Dialog
 
-```vue
+```html
 <template>
   <VImageCropDialog
     v-model="open"
@@ -157,67 +158,121 @@ const handleCroppedImage = (file: File) => {
 </template>
 ```
 
-## 🔧 Props
+### Custom Icons and Button Text
 
-| Prop | Tipo | Padrão | Descrição |
-|------|------|--------|-----------|
-| `modelValue` | `boolean` | `false` | Controla a visibilidade do dialog |
-| `file` | `File \| null` | `null` | Arquivo de imagem a ser recortado |
-| `url` | `string \| null` | `null` | URL da imagem a ser recortada |
-| `stencil` | `'rect' \| 'circle'` | `'rect'` | Tipo de molde para recorte |
-| `imgWidth` | `number` | `undefined` | Largura da imagem de saída (em pixels) |
-| `imgHeight` | `number` | `undefined` | Altura da imagem de saída (em pixels) |
-| `aspectRatio` | `number` | `undefined` | Proporção de aspecto do recorte (ex: 16/9, 1) |
-| `persistent` | `boolean` | `false` | Se verdadeiro, o dialog não pode ser fechado clicando fora |
-| `maxWidth` | `string \| number` | `'auto'` | Largura máxima do dialog |
+```html
+<template>
+  <VImageCropDialog
+    v-model="open"
+    :url="imageUrl"
+    icon-rotate-right="mdi-rotate-clockwise"
+    icon-flip-horizontal="mdi-swap-horizontal"
+    crop-button-text="Confirm"
+    icon-crop="mdi-check-circle"
+    @update:file="handleCroppedImage"
+  />
+</template>
+```
 
-## 📤 Events
+## API
 
-| Event | Payload | Descrição |
-|-------|---------|-----------|
-| `update:modelValue` | `boolean` | Emitido quando o estado de visibilidade muda |
-| `update:file` | `File` | Emitido quando a imagem é recortada, retorna o arquivo WebP |
+### Props
 
-## 🎯 Slots
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `modelValue` | `boolean` | `false` | Controls dialog visibility |
+| `file` | `File \| null` | `null` | Image file to crop |
+| `url` | `string \| null` | `null` | Image URL to crop |
+| `stencil` | `'rect' \| 'circle'` | `'rect'` | Type of crop stencil |
+| `imgWidth` | `number` | `undefined` | Output image width in pixels |
+| `imgHeight` | `number` | `undefined` | Output image height in pixels |
+| `aspectRatio` | `number` | `undefined` | Crop aspect ratio (e.g., 16/9, 1) |
+| `persistent` | `boolean` | `false` | Prevents dialog from closing when clicking outside |
+| `maxWidth` | `string \| number` | `'auto'` | Maximum dialog width |
+| `iconFlipVertical` | `string` | `'mdi-flip-vertical'` | Icon for vertical flip control |
+| `iconFlipHorizontal` | `string` | `'mdi-flip-horizontal'` | Icon for horizontal flip control |
+| `iconRotateRight` | `string` | `'mdi-rotate-right'` | Icon for rotate right control |
+| `iconRotateLeft` | `string` | `'mdi-rotate-left'` | Icon for rotate left control |
+| `iconZoomIn` | `string` | `'mdi-magnify-plus-outline'` | Icon for zoom in control |
+| `iconZoomOut` | `string` | `'mdi-magnify-minus-outline'` | Icon for zoom out control |
+| `iconReset` | `string` | `'mdi-refresh'` | Icon for reset control |
+| `iconCrop` | `string` | `'mdi-check'` | Icon for crop button |
+| `cropButtonText` | `string` | `'Crop'` | Text for crop button |
 
-| Slot | Props | Descrição |
-|------|-------|-----------|
-| `activator` | `activatorProps` | Slot para o elemento que ativa o dialog |
+### Events
 
-### Exemplo com slot activator
+| Event | Payload | Description |
+|-------|---------|-------------|
+| `update:modelValue` | `boolean` | Emitted when dialog visibility changes |
+| `update:file` | `File` | Emitted when image is cropped, returns WebP file |
 
-```vue
+### Slots
+
+| Slot | Props | Description |
+|------|-------|-------------|
+| `activator` | `activatorProps` | Slot for element that activates the dialog |
+| `crop-button` | `{ processing: boolean, crop: () => void }` | Slot for custom crop button |
+
+### Activator Slot
+
+Use the activator slot to customize the element that opens the dialog:
+
+```html
 <template>
   <VImageCropDialog v-model="open" :url="imageUrl">
     <template #activator="{ props: activatorProps }">
       <VBtn v-bind="activatorProps" color="primary">
-        Recortar Imagem
+        Crop Image
       </VBtn>
     </template>
   </VImageCropDialog>
 </template>
 ```
 
-## 🎮 Controles do Recortador
+### Crop Button Slot
 
-O componente inclui controles integrados para:
+Use the crop-button slot to completely customize the crop button:
 
-- 🔄 **Rotação**: Rotacionar imagem 90° para esquerda ou direita
-- 🪞 **Espelhamento**: Inverter imagem horizontal ou verticalmente
-- 🔍 **Zoom**: Ampliar ou reduzir a imagem
-- 🔃 **Reset**: Restaurar imagem ao estado original
+```html
+<template>
+  <VImageCropDialog v-model="open" :url="imageUrl">
+    <template #crop-button="{ processing, crop }">
+      <VBtn
+        color="success"
+        :loading="processing"
+        @click="crop"
+      >
+        <VIcon icon="mdi-check" start />
+        Confirm Crop
+      </VBtn>
+    </template>
+  </VImageCropDialog>
+</template>
+```
 
-## 📝 Notas
+## Cropper Controls
 
-- A imagem recortada é sempre exportada no formato **WebP**
-- Se `imgWidth` e `imgHeight` não forem especificados, a imagem manterá suas dimensões originais
-- O componente requer que `file` ou `url` seja fornecido para funcionar
-- Certifique-se de que o Vuetify está configurado corretamente no seu projeto
+The component includes built-in controls for:
 
-## 📄 Licença
+- **Rotate**: Rotate image 90° left or right
+- **Flip**: Flip image horizontally or vertically
+- **Zoom**: Zoom in or out
+- **Reset**: Restore image to original state
+
+These controls are displayed as floating buttons over the cropper and can be customized via icon props.
+
+## Notes
+
+- The cropped image is always exported in **WebP** format
+- If `imgWidth` and `imgHeight` are not specified, the image will maintain its original dimensions
+- The component requires either `file` or `url` to be provided to function
+- Make sure Vuetify is properly configured in your project
+- All icon props accept Material Design Icons (mdi-*) or any icon string compatible with Vuetify's VIcon component
+
+## License
 
 ISC
 
-## 👤 Autor
+## Author
 
-Cesar Vieira
+[Cesar Vieira](https://github.com/cesarvieira)

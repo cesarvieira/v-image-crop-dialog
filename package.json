@@ -1,6 +1,6 @@
 {
-  "name": "@cesarvieira/v-image-crop-dialog",
-  "version": "1.0.1",
+  "name": "@cesarv/v-image-crop-dialog",
+  "version": "0.0.2",
   "description": "Componente Vue 3 dialog para recorte de imagens com Vuetify 3 e TypeScript",
   "main": "dist/v-image-crop-dialog.umd.js",
   "module": "dist/v-image-crop-dialog.mjs",
@@ -24,7 +24,8 @@
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint .",
     "build": "vite build",
-    "playground": "vite --config playground/vite.config.ts"
+    "playground": "vite --config playground/vite.config.ts",
+    "preversion": "npm run lint && npm run type-check"
   },
   "keywords": [
     "vue",
@@ -48,12 +49,12 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cesarvieira/v-image-cropper.git"
+    "url": "https://github.com/cesarvieira/v-image-crop-dialog.git"
   },
   "bugs": {
-    "url": "https://github.com/cesarvieira/v-image-cropper/issues"
+    "url": "https://github.com/cesarvieira/v-image-crop-dialog/issues"
   },
-  "homepage": "https://github.com/cesarvieira/v-image-cropper#readme",
+  "homepage": "https://github.com/cesarvieira/v-image-crop-dialog#readme",
   "devDependencies": {
     "@stylistic/eslint-plugin": "^5.6.1",
     "@vitejs/plugin-vue": "^6.0.3",
