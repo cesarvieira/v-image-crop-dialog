@@ -2,7 +2,6 @@
 import { computed, ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import { Cropper, CircleStencil } from 'vue-advanced-cropper';
 import type { CropperResult, ImageSize } from 'vue-advanced-cropper';
-import 'vue-advanced-cropper/dist/style.css';
 import { VDialog, VCard, VCardText, VCardActions, VBtn, VIcon } from 'vuetify/components';
 import { useLocale } from 'vuetify';
 
@@ -71,7 +70,6 @@ watch(() => props.url, (value) => {
 watch(show, (value) => {
   if (!value) {
     fileName.value = 'image.webp';
-    previewUrl.value = null;
     processing.value = false;
   }
 });
@@ -181,7 +179,7 @@ onBeforeUnmount(() => {
             variant="tonal"
             class="ms-3 px-4"
             :loading="processing"
-            @click="crop"
+            @click="show = false"
           >
             {{ labels.cancel }} <VIcon :icon="props.icons?.cancel || 'mdi-close'" end />
           </VBtn>

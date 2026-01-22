@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { VImageCropDialog } from '../src/index.ts';
+import VImageCropDialog from '../src/index.ts';
 import { useLocale } from 'vuetify';
 
 const open = ref(false);

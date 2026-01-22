@@ -13,7 +13,6 @@ export default defineConfig({
     lib: {
       entry: 'src/index.ts',
       name: 'VImageCropDialog',
-      fileName: 'v-image-crop-dialog',
     },
     rollupOptions: {
       external: ['vue', 'vuetify', 'vue-advanced-cropper'],
@@ -23,6 +22,7 @@ export default defineConfig({
           vuetify: 'Vuetify',
           'vue-advanced-cropper': 'VueAdvancedCropper',
         },
+        assetFileNames: 'styles.css',
       },
     },
   },

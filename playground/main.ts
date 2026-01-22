@@ -1,5 +1,3 @@
-import '@mdi/font/css/materialdesignicons.css';
-
 import { createApp } from 'vue';
 
 // Vuetify

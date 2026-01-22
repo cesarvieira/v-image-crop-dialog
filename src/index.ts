@@ -1,10 +1,5 @@
-import type { App } from 'vue';
+import '@mdi/font/css/materialdesignicons.css';
+import 'vue-advanced-cropper/dist/style.css';
 import VImageCropDialog from './components/VImageCropDialog.vue';
 
-export { VImageCropDialog };
-
-export default {
-  install(app: App) {
-    app.component('VImageCropDialog', VImageCropDialog);
-  },
-};
+export default VImageCropDialog;
