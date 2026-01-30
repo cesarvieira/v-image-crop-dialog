@@ -26,6 +26,19 @@ A Vue 3 dialog component for image cropping, built with Vuetify 3 and TypeScript
 npm install @cesarv/v-image-crop-dialog
 ```
 
+If you use the default toolbar icons (Material Design Icons), install the font and import it in your app:
+
+```bash
+npm install @mdi/font
+```
+
+```typescript
+// In main.ts or your entry file
+import '@mdi/font/css/materialdesignicons.css';
+```
+
+Alternatively, you can pass custom icon names (compatible with your existing icon set) via the icon props and skip the MDI font.
+
 ## Usage
 
 ### Setup
@@ -44,8 +57,10 @@ Or import the component directly:
 
 ```html
 <script setup lang="ts">
-import { VImageCropDialog } from '@cesarv/v-image-crop-dialog';
-import '@cesarv/v-image-crop-dialog/dist/v-image-crop-dialog.css';
+import VImageCropDialog from '@cesarv/v-image-crop-dialog';
+import '@cesarv/v-image-crop-dialog/dist/style.css';
+// If you use the default icons (Material Design Icons), import the font in your app:
+// import '@mdi/font/css/materialdesignicons.css';
 </script>
 ```
 
@@ -66,7 +81,7 @@ import '@cesarv/v-image-crop-dialog/dist/v-image-crop-dialog.css';
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { VImageCropDialog } from '@cesarv/v-image-crop-dialog';
+import VImageCropDialog from '@cesarv/v-image-crop-dialog';
 
 const open = ref(false);
 const imageUrl = ref('https://example.com/image.jpg');
@@ -267,7 +282,7 @@ These controls are displayed as floating buttons over the cropper and can be cus
 - If `imgWidth` and `imgHeight` are not specified, the image will maintain its original dimensions
 - The component requires either `file` or `url` to be provided to function
 - Make sure Vuetify is properly configured in your project
-- All icon props accept Material Design Icons (mdi-*) or any icon string compatible with Vuetify's VIcon component
+- Default icons use Material Design Icons (mdi-*). Import `@mdi/font/css/materialdesignicons.css` in your app when using defaults, or pass icon props compatible with your own icon set (e.g. Vuetify's VIcon).
 
 ## License
 
