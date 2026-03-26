@@ -1,10 +1,10 @@
 # V-Image-Crop-Dialog
 
-A Vue 3 dialog component for image cropping, built with Vuetify 3 and TypeScript. Based on `vue-advanced-cropper` for a powerful and intuitive cropping experience.
+A Vue 3 dialog component for image cropping, built with Vuetify 4 and TypeScript. Based on `vue-advanced-cropper` for a powerful and intuitive cropping experience.
 
 ## Features
 
-- 🎨 Full integration with **Vuetify 3**
+- 🎨 Full integration with **Vuetify 4**
 - 🔄 Support for **rectangular** and **circular** cropping
 - 🖼️ Support for images via **File** or **URL**
 - 🔧 Advanced controls: rotation, flip, zoom, and reset
@@ -18,7 +18,7 @@ A Vue 3 dialog component for image cropping, built with Vuetify 3 and TypeScript
 ## Requirements
 
 - Vue 3.5+
-- Vuetify 3.11+
+- Vuetify 4+
 
 ## Installation
 

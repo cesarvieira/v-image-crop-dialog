@@ -9,11 +9,13 @@ import * as directives from 'vuetify/directives';
 import '@mdi/font/css/materialdesignicons.css';
 
 import App from './App.vue';
-import 'vuetify/styles';
 
 const app = createApp(App);
 app.use(createVuetify({
   components,
   directives,
+  theme: {
+    defaultTheme: 'light',
+  },
 }));
 app.mount('#app');

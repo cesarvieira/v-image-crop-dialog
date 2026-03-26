@@ -50,3 +50,14 @@ const { t } = useLocale();
     </div>
   </div>
 </template>
+
+<style scoped>
+table {
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+td {
+  padding: 4px 12px 4px 0;
+  vertical-align: top;
+}
+</style>

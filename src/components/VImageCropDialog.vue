@@ -3,7 +3,6 @@ import { computed, ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import { Cropper, CircleStencil } from 'vue-advanced-cropper';
 import type { CropperResult, ImageSize } from 'vue-advanced-cropper';
 import { VDialog, VCard, VCardText, VCardActions, VBtn, VIcon } from 'vuetify/components';
-import { useLocale } from 'vuetify';
 
 interface Props {
   modelValue: boolean;
@@ -33,11 +32,11 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const { t } = useLocale();
 
 const labels = computed(() => ({
-  crop: props.labels?.crop || t('$vuetify.confirmEdit.ok'),
-  cancel: props.labels?.cancel || t('$vuetify.confirmEdit.cancel'),
+  // Avoid relying on Vuetify internal translation keys across major versions.
+  crop: props.labels?.crop ?? 'Crop',
+  cancel: props.labels?.cancel ?? 'Cancel',
 }));
 
 const emit = defineEmits<{
@@ -53,6 +52,15 @@ const previewUrl = ref<string | null>(null);
 const show = computed({
   get: () => props.modelValue,
   set: value => emit('update:modelValue', value),
+});
+
+// Keep the dialog closed if no `file` is provided, while still allowing the parent
+// to control visibility via `v-model`.
+const dialogOpen = computed({
+  get: () => show.value && props.file !== null,
+  set: (value) => {
+    show.value = value;
+  },
 });
 
 const stencilComponent = computed(() =>
@@ -133,11 +141,10 @@ onBeforeUnmount(() => {
 
 <template>
   <VDialog
-    :model-value="show && props.file !== null"
+    v-model="dialogOpen"
     :persistent="props.persistent"
     :max-width="props.maxWidth || 'auto'"
     width="auto"
-    @update:model-value="show = $event"
   >
     <template #activator="{ props: activatorProps }">
       <slot name="activator" v-bind="activatorProps"></slot>
@@ -178,6 +185,7 @@ onBeforeUnmount(() => {
             color="secondary"
             variant="tonal"
             class="ms-3 px-4"
+            text-transform="uppercase"
             :loading="processing"
             @click="show = false"
           >
@@ -188,6 +196,7 @@ onBeforeUnmount(() => {
             color="primary"
             variant="tonal"
             class="me-3 px-4"
+            text-transform="uppercase"
             :loading="processing"
             @click="crop"
           >

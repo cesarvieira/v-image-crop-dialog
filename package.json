@@ -1,7 +1,7 @@
 {
   "name": "@cesarv/v-image-crop-dialog",
   "version": "1.1.1",
-  "description": "Componente Vue 3 dialog para recorte de imagens com Vuetify 3 e TypeScript",
+  "description": "Componente Vue 3 dialog para recorte de imagens com Vuetify 4 e TypeScript",
   "main": "dist/v-image-crop-dialog.umd.js",
   "module": "dist/v-image-crop-dialog.mjs",
   "types": "dist/index.d.ts",
@@ -32,7 +32,7 @@
     "vue",
     "vue3",
     "vuetify",
-    "vuetify3",
+    "vuetify4",
     "image",
     "cropper",
     "crop",
@@ -75,7 +75,7 @@
   "peerDependencies": {
     "@mdi/font": "^7.4.47",
     "vue": "^3.5.26",
-    "vuetify": "^3.11.5"
+    "vuetify": "^4.0.0"
   },
   "dependencies": {
     "vue-advanced-cropper": "^2.8.9"
